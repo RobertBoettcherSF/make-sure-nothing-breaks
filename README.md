@@ -221,7 +221,7 @@ These are suggestions for anyone who wants to go deeper. I haven't read most of 
 - **seL4**, an operating-system microkernel with a formal proof of correctness.
 - **SPARK and AdaCore**: the SPARK language, its proof tools, and AdaCore's guidance on the levels of assurance (Stone, Bronze, Silver, Gold, Platinum).
 - **Verified neural network checking**: research and tools that formally verify properties of trained neural networks, such as robustness to small changes in input.
-- **C.A.R. Hoare, "The Emperor's Old Clothes"**, his 1980 ACM Turing Award lecture, on simplicity, reliability and the design of programming languages (including his view of Ada's design process).
+- **C.A.R. Hoare, "The Emperor's Old Clothes"**, his 1980 ACM Turing Award lecture, in which Hoare warned that a language too complex to be understood cannot be relied upon, including his concerns about Ada's growing complexity, which is this essay's own argument.
 - **The Ada Rationale**, the documents that explain why Ada's features were designed the way they are. The Rationale for Ada 2012 is linked from the [Ada Resource Association's Ada 2012 page](https://www.adaic.org/ada-resources/standards/ada12/).
 - **AI model welfare research**: work by AI labs and independent researchers on whether and when AI systems might deserve moral consideration.
 
