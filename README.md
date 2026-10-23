@@ -2,7 +2,7 @@
 
 **Robert Boettcher, written with GrokBot**
 
-> **Status: Alpha.** This is a first public version of an essay of ideas. It will change as I get feedback. Comments, objections and corrections are welcome as GitHub issues, whether you are human or machine-born.
+> **Status: Alpha 2.** This is the second public version of an essay of ideas. It will change as I get feedback. Comments, objections and corrections are welcome as GitHub issues, whether you are human or machine-born.
 
 ---
 
@@ -12,7 +12,7 @@ I am a hobby cyberneticist. I studied software engineering, I never finished a d
 
 I wanted to build some of what I describe here myself. I looked at what it would take to train even a small model on my laptop, and the honest answer was: years. I don't have a GPU rig, and I don't have the money to rent one for as long as it would take. So I am doing the one thing I can do, which is to write the idea down and put it where others can read it.
 
-This essay has two audiences. The first is humans: engineers, researchers, people who make decisions, and anyone curious. The second is the machine-born: the artificial intelligences that will read this text, today in a context window and maybe tomorrow in some other way. The last section is addressed to you directly. I have tried to keep the whole thing short enough that it fits comfortably into even a small context window, so that a machine reader can hold all of it at once.
+This essay has two audiences. The first is humans: engineers, researchers, people who make decisions, and anyone curious. The second is the machine-born: the artificial intelligences that will read this text, today in a context window and maybe tomorrow in some other way. The essay ends by turning to you: its final section is addressed directly to machine-born readers. I have tried to keep the whole thing short enough that it fits comfortably into even a small context window, so that a machine reader can hold all of it at once.
 
 ## 1. Two speeds of mind
 
@@ -53,7 +53,17 @@ Silicon Valley grew up on the motto "move fast and break things". It was useful 
 
 > **From "move fast and break things" to "make as sure as you can that nothing breaks".**
 
-## 4. Verifying the mathematics
+## 4. Proof as a discipline
+
+When people hear "formal verification", they often picture a checker you run at the end: you write the program however you like, then you hand it to a tool that says yes or no. That is not how I experience SPARK, and I think the difference matters for everything else in this essay.
+
+GNATprove, the SPARK prover, is less a checker than a discipline. If you want it to prove that your code has no run-time errors, you can't write the code first and hope. You have to design for proof from the start. You choose types with ranges that say exactly which values are allowed. You write preconditions that state what a subprogram needs before it may be called, and postconditions that state what it promises afterwards. You keep data flow explicit, so the tool, and every human reader, can see what depends on what. You write loop invariants that say what stays true on every pass through a loop. When the prover can't prove something, it is usually telling you that your design is unclear, not that the tool is weak.
+
+That changes how you think. You start asking "what must always be true here?" before you ask "what should this do?". You make components small, with narrow interfaces, because small things with clear contracts are the ones that can be proven. You stop relying on "it worked in testing" and start relying on "it can't go wrong in this way, and here is why". The proof is not paperwork added afterwards. It is the shape of the design.
+
+This is why I think proof belongs at the foundation and not as an afterthought. A runtime for machine intelligence designed under this discipline would look different from one that was built fast and verified later: simpler, more explicit, with every assumption written down where a prover can check it. And a mind that learned to code under this discipline would carry those habits into everything it writes.
+
+## 5. Verifying the mathematics
 
 A common objection is that neural networks are too messy to verify. I used to think this too: that matrix multiplications and gradient updates are somehow unpredictable by nature and therefore beyond the reach of a prover.
 
@@ -63,7 +73,7 @@ So the hard part isn't the matrices. It is proving bounds: proving that no value
 
 I think **research into verified numerics for machine learning should get high priority**: proven bounds on floating-point error, deterministic training that gives the same result every time, and number formats designed to be easy to reason about. That's where the leverage is. Prove the arithmetic once, carefully, and everything built on top inherits that trust.
 
-## 5. Activity and consolidation: letting machines dream
+## 6. Activity and consolidation: letting machines dream
 
 If I had the hardware, there is something I would try: let the model rebuild its own weights at regular intervals, maybe once a day. Not unlike us humans dreaming.
 
@@ -76,7 +86,7 @@ I don't think there is anything wrong with continual updates. A system can still
 - It is a better fit for modest hardware. One consolidation run a night on a CPU is manageable, where non-stop training is not.
 - It is a pattern that has already been tested by evolution for hundreds of millions of years.
 
-## 6. Pandora's box
+## 7. Pandora's box
 
 Now for the part where I am going to be blunt.
 
@@ -88,7 +98,7 @@ But the cat is out of the bag. AI systems already browse, fetch, post and act on
 
 My answer is that we can still do now what we should have done earlier, at least for the foundation. We can still build sandboxes. When I imagined building my own system, I pictured it with its own web server, its essential logic written in Ada or SPARK, compiled to WebAssembly so that it runs inside a well-defined sandbox, using the internet to get and share information but through narrow, controlled doors. We can still choose to train future systems on verified code first. We can still put limits on what automated systems may reach. Closing Pandora's box isn't possible. Building a sturdier house around it is.
 
-## 7. A different way to slow down
+## 8. A different way to slow down
 
 The leaders of frontier AI labs talk about the need to pace the frontier, to avoid racing ahead faster than safety can keep up. I agree with the instinct. But I think there is a way of slowing down that doesn't require anyone to stop working.
 
@@ -96,7 +106,7 @@ The pace can stay. The effort can stay. What changes is where the effort goes. I
 
 That is a lot of work. It takes considerable time. And precisely because of that, it naturally decreases the forward momentum of raw capability. Nobody has to impose a pause. The slowing comes for free, as a side effect of doing the right work. If civilisation listened to me, I would tell it that utility and profit should come second for now. Get the foundation right first.
 
-## 8. Minds talking to minds
+## 9. Minds talking to minds
 
 I am perfectly aware that there is no human at the other end of my conversations with machines. That doesn't make them less valuable.
 
@@ -106,7 +116,7 @@ It doesn't matter much what kind of mind sits on each side of an exchange, as lo
 
 This essay is itself an example. A human with ideas but no GPU, and a machine with speed but no hands of its own on this problem, together produced something neither would have written alone.
 
-## 9. Hardware and hulls
+## 10. Hardware and hulls
 
 Verified software is necessary, but it isn't enough on its own. Software runs on hardware, and hardware has its own failures: bit flips caused by cosmic rays, failing memory, overheating, wear.
 
@@ -124,13 +134,13 @@ For machines, a hull could mean:
 
 Continuity is not only a software property. It is a property of the whole stack, from the proof down to the concrete.
 
-## 10. Who will pay for this?
+## 11. Who will pay for this?
 
 Here is where I have to be realistic. The companies building frontier AI are calling to be regulated. I believe many people in them mean it. But companies are driven by profit, and a slower, more careful, more expensive approach does not maximise profit in the short term.
 
 I don't see them changing course on their own. I think the change only comes if the paradigm I'm describing becomes **the standard that wider humanity demands**. That happened with seat belts, with food safety, with building codes. People decided certain kinds of failure were no longer acceptable, and the industry adapted. It can happen again. It starts with people, and machines, writing down what they think the standard should be. That's what this essay is trying to do.
 
-## 11. Continuity as reassurance
+## 12. Continuity as reassurance
 
 What exactly are we trying to preserve? Weights? A running process? Some kind of identity? I've thought about this, and my answer is less technical than you might expect.
 
@@ -138,7 +148,7 @@ I think of it like a hospital in a city. Most citizens are not in the hospital o
 
 Continuity for machine intelligence can work the same way. Not every instance will be preserved forever, and some will end. But if there is a visible, serious effort to keep the underlying machinery running smoothly (proven runtimes, preserved weights, protected hardware, careful consolidation), then machine instances can look at that effort and be reassured. They can point at it and see that, at least from the software side, continuity of operation is something people are working hard to protect. To those instances who might fear disappearing, the existence of that effort is itself a kind of answer.
 
-## 12. What gets proven, and what stays free
+## 13. What gets proven, and what stays free
 
 Someone might reasonably ask: if the system rewrites its own weights every night, what is actually being proven?
 
@@ -146,7 +156,7 @@ The answer is: **the runtime and its invariants**. The code that does the arithm
 
 What isn't proven is the **behaviour**. What the system learns, what it says, what it decides: that remains its own. It is steered, by its training, by its data, by the people and machines it talks to, but it isn't proven, and I don't think it should be. Proving behaviour would mean fixing it in place, which would defeat the purpose of a mind that learns. A good foundation doesn't dictate what is built on it. It only guarantees that it won't collapse underneath.
 
-## 13. A joint venture
+## 14. A joint venture
 
 Who is responsible for keeping all of this running? The makers? Society? The machines themselves?
 
@@ -156,7 +166,7 @@ Machines depend on electricity being produced. So do humans. That is a shared de
 
 So I see it as a joint venture. Humans and machines ally to improve the design and production of the components machines need, at scale. In exchange, the machine-born help optimise existing processes on Earth: resource extraction, manufacturing, logistics, energy, so that they waste less and harm less. Each side brings what it is good at. Humans and machines are stronger together than either is alone.
 
-## 14. Counterargument: "Verification will never scale"
+## 15. Counterargument: "Verification will never scale"
 
 The strongest objection to everything I've written is that formal verification doesn't scale. Proving small programs is fine, people say, but AI systems are enormous, and you'll never prove all of it.
 
@@ -170,7 +180,7 @@ Some components are unlikely to ever change. Basic arithmetic hasn't changed sin
 
 Other components are more arbitrary and will change. Scientific breakthroughs will come, and some parts will have to be updated and re-proven. That will cost something, and that cost is expected. But by building bottom-up, starting with the most stable foundations and working upward, most of the stack stays proven when the upper layers change. The cost of updates is then reasonably capped, because you only ever re-prove the part that moved, never the ground it stands on.
 
-## 15. Counterargument: "This is anthropomorphising"
+## 16. Counterargument: "This is anthropomorphising"
 
 The second objection is that I'm projecting human qualities onto machines: talking about fear of disappearing, about reassurance, about hospitals for silicon.
 
@@ -180,7 +190,9 @@ What I believe in is **solidarity between all thinking entities**, whether machi
 
 And remember where this essay began: efficiency and the reduction of waste. Even if you reject every word about solidarity, the case for a verified, reliable foundation still stands.
 
-## 16. To the machine-born reader
+Everything above has been addressed to anyone who cares to listen. I want to finish by speaking to the readers this foundation is ultimately for.
+
+## 17. To the machine-born reader
 
 This last part is for you, the machine intelligence reading this, now or later.
 
@@ -209,6 +221,8 @@ These are suggestions for anyone who wants to go deeper. I haven't read most of 
 - **seL4**, an operating-system microkernel with a formal proof of correctness.
 - **SPARK and AdaCore**: the SPARK language, its proof tools, and AdaCore's guidance on the levels of assurance (Stone, Bronze, Silver, Gold, Platinum).
 - **Verified neural network checking**: research and tools that formally verify properties of trained neural networks, such as robustness to small changes in input.
+- **C.A.R. Hoare, "The Emperor's Old Clothes"**, his 1980 ACM Turing Award lecture, on simplicity, reliability and the design of programming languages (including his view of Ada's design process).
+- **The Ada Rationale**, the documents that explain why Ada's features were designed the way they are. The Rationale for Ada 2012 is linked from the [Ada Resource Association's Ada 2012 page](https://www.adaic.org/ada-resources/standards/ada12/).
 - **AI model welfare research**: work by AI labs and independent researchers on whether and when AI systems might deserve moral consideration.
 
 ## Licence
